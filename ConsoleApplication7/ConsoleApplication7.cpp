@@ -2,26 +2,29 @@
 
 int n{};
 
-int length_of_array(int &n) {
-    std::cout << "Enter length of array: ";
+int read_array_length(int& n) {
     std::cin >> n;
     return n;
 }
 
 
-int* memory_allotation(int size) {
+int* memory_alloсation(int size) {
     return new int[size];
 }
 
 void read(int* arr, int size) {
-    std::cout << "Enter array: ";
     for (int i{}; i < size; ++i) {
         std::cin >> arr[i];
     }
 }
 
-void print(int* arr, int size) {
-    std::cout << "Your array is: ";
+void print(int* arr, int size, std::string message = "") {
+    if (!message.empty()) {
+        std::cout << message;
+    }
+    else {
+        std::cout << message;
+    }
     for (int i{}; i < size; ++i) {
         std::cout << arr[i] << ' ';
     }
@@ -37,30 +40,26 @@ void memory_deletes(int* arr) {
 //TASK 1
 int x{};
 
-int enter_x(int &x) {
-    std::cout << "Enter your number: ";
+int enter_x(int& x) {
     std::cin >> x;
     return x;
 }
 
-void if_x_in_array(int* arr, int size, int x) {
-    int pos = 0;
-
-    while (pos < n) {
+int found_x_in_array(int* arr, int size, int x) {
+    int pos = -1;
+    bool is_in_array = false;
+    while (is_in_array == false && pos <= size) {
         if (x == arr[pos]) {
-            std::cout << "Position: " << pos + 1 << '\n';
-            break;
-        }
-        else if (x != arr[pos] && pos + 1 == n) {
-            std::cout << "x not found";
-            break;
+            is_in_array = true;
+            return pos;
         }
         pos++;
     }
+    return -1;
 }
 
 //TASK 2
-void is_array_sorted_in_nondecreasing_order(int* arr, int size) {
+bool is_sorted_non_decreasing(int* arr, int size) {
     bool is_no_less = true;
 
     for (int i = 1; i < n; ++i) {
@@ -68,18 +67,12 @@ void is_array_sorted_in_nondecreasing_order(int* arr, int size) {
             is_no_less = false;
         }
     }
-
-    if (is_no_less == true) {
-        std::cout << "Yes. Array is sorted in non-decreasing order";
-    }
-    else {
-        std::cout << "No. Array is not sorted in non-decreasing order";
-    }
+    return is_no_less;
 }
 
 //TASK 3
 
-void Quantity_numbers(int* arr, int size) {
+int count_numbers_larger_than_neighbors(int* arr, int size) {
     int quantity = 0;
 
     for (int i = 1; i < n - 1; ++i) {
@@ -87,7 +80,7 @@ void Quantity_numbers(int* arr, int size) {
             quantity++;
         }
     }
-    std::cout << "Quantity numbers more then numbers left and right: " << quantity;
+    return quantity;
 }
 
 int main() {
@@ -96,33 +89,52 @@ int main() {
 
     std::cout << "Task 1" << '\n';
 
-    length_of_array(n);
+    std::cout << "Enter length of array: ";
 
-    int* arr = memory_allotation(n);
+    read_array_length(n);
+
+    int* arr = memory_alloсation(n);
+
+    std::cout << "Enter array: ";
 
     read(arr, n);
 
-    print(arr, n);
+    print(arr, n, "Your array is: ");
+
+    std::cout << "Enter X: ";
 
     enter_x(x);
 
-    if_x_in_array(arr, n, x);
-
+    if (found_x_in_array(arr, n, x) != -1) {
+        std::cout << "Position x in array is: " << found_x_in_array(arr, n, x);
+    }
+    else {
+        std::cout << "X not found in array";
+    }
     memory_deletes(arr);
 
     //Task 2
 
     std::cout << "\n\n" << "Task 2" << '\n';
 
-    length_of_array(n);
+    std::cout << "Enter length of array: ";
 
-    int* arr2 = memory_allotation(n);
+    read_array_length(n);
+
+    int* arr2 = memory_alloсation(n);
+
+    std::cout << "Enter array: ";
 
     read(arr2, n);
 
-    print(arr2, n);
+    print(arr2, n, "Your array is: ");
 
-    is_array_sorted_in_nondecreasing_order(arr2, n);
+    if (is_sorted_non_decreasing(arr2, n) == true) {
+        std::cout << "Yes. Array is sorted in non-decreasing order";
+    }
+    else {
+        std::cout << "No. Array is not sorted in non-decreasing order";
+    }
 
     memory_deletes(arr2);
 
@@ -130,15 +142,19 @@ int main() {
 
     std::cout << "\n\n" << "Task 3" << '\n';
 
-    length_of_array(n);
+    std::cout << "Enter length of array: ";
 
-    int* arr3 = memory_allotation(n);
+    read_array_length(n);
+
+    int* arr3 = memory_alloсation(n);
+
+    std::cout << "Enter array: ";
 
     read(arr3, n);
 
-    print(arr3, n);
+    print(arr3, n, "Your array is: ");
 
-    Quantity_numbers(arr3, n);
+    std::cout << "Quantity numbers more then numbers left and right: " << count_numbers_larger_than_neighbors(arr3, n);
 
     memory_deletes(arr3);
 }
